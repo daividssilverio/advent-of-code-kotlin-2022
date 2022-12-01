@@ -1,17 +1,35 @@
 fun main() {
-    fun part1(input: List<String>): Int {
-        return input.size
+    val inventory = readInput("Day01_test")
+    val highestInventoryInCalories = findHighestInventoryInCalories(inventory)
+    val sumOfTopThreeInventories = findTopSumsOfCaloriesInventories(inventory, 3)
+    println(highestInventoryInCalories)
+    println(sumOfTopThreeInventories)
+}
+
+fun findTopSumsOfCaloriesInventories(foodInventory: List<String>, count: Int): Int {
+    var currentElfInventoryCaloriesSum = 0
+    var maxCaloriesInventories = emptyList<Int>()
+    foodInventory.forEachIndexed { index, food ->
+        currentElfInventoryCaloriesSum += food.toIntOrNull() ?: 0
+        if (food.isBlank() || index == foodInventory.lastIndex) {
+            maxCaloriesInventories = (maxCaloriesInventories + currentElfInventoryCaloriesSum).sortedDescending().take(count)
+            currentElfInventoryCaloriesSum = 0
+        }
     }
 
-    fun part2(input: List<String>): Int {
-        return input.size
+    return maxCaloriesInventories.sum()
+}
+fun findHighestInventoryInCalories(foodInventory: List<String>): Int {
+    var maxCalories = -1
+    var currentElfInventoryCaloriesSum = 0
+    foodInventory.forEachIndexed { index, food ->
+        currentElfInventoryCaloriesSum += food.toIntOrNull() ?: 0
+        if (food.isBlank() || index == foodInventory.lastIndex) {
+            if (currentElfInventoryCaloriesSum > maxCalories) {
+                maxCalories = currentElfInventoryCaloriesSum
+            }
+            currentElfInventoryCaloriesSum = 0
+        }
     }
-
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
-
-    val input = readInput("Day01")
-    println(part1(input))
-    println(part2(input))
+    return maxCalories
 }
