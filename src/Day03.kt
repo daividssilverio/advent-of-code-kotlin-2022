@@ -1,5 +1,5 @@
-fun String.splitInHalf() = this.subSequence(0, length / 2) to this.subSequence(length / 2, length)
-fun Char.toPriority() = if (isLowerCase()) code - 96 else code - 38
+private fun String.splitInHalf() = this.subSequence(0, length / 2) to this.subSequence(length / 2, length)
+private fun Char.toPriority() = if (isLowerCase()) code - 96 else code - 38
 fun main() {
     val rucksacks = readInput("Day03_test")
     val sumOfDuplicates = rucksacks
